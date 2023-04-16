@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %} Register{% endblock title %}
+{% block body %}
+
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Wallet of {{ request.user }}</h2>
+
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <div class="card bg-light mb-3">
+        <div class="card-header">Balance</div>
+        <div class="card-body">
+          <h3 class="card-title">{{ balance }}</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Date</th>
+          <th scope="col">Amount</th>
+          <th scope="col">CR/DR</th>
+          <th scope="col">Sender</th>
+          <th scope="col">Receiver</th>
+          <th scope="col">Remark</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for transaction in transactions %}
+        <tr>
+          <td>{{ transaction.transaction_date }}</td>
+          <td>{{ transaction.amount }}</td>
+          <td>{% if request.user == transaction.receiver %}CR{% elif request.user == transaction.sender %} DR{% endif %}</td>
+          <td>{{ transaction.sender }}</td>
+          <td>{{ transaction.receiver }}</td>
+          <td>{{ transaction.remarks }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+{% endblock %}
